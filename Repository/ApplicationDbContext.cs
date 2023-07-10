@@ -15,7 +15,7 @@ namespace TicketCinema.Repository
             : base(options)
         {
         }
-
+       
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCards { get; set; }
         public virtual DbSet<MovieInShoppingCart> ProductInShoppingCarts { get; set; }
@@ -66,5 +66,7 @@ namespace TicketCinema.Repository
                 .WithMany(z => z.MovieInOrders)
                 .HasForeignKey(z => z.OrderId);
         }
+
+ 
     }
 }
