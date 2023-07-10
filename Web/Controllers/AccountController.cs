@@ -5,18 +5,20 @@ using System.Security.Claims;
 using TicketCinema.Models.DTO;
 using TicketCinema.Models.Identity;
 
-namespace TicketCinema.Controllers
+namespace TicketCinema.Web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly UserManager<TicketCinemaAppUser> userManager;
         private readonly SignInManager<TicketCinemaAppUser> signInManager;
+
         public AccountController(UserManager<TicketCinemaAppUser> userManager, SignInManager<TicketCinemaAppUser> signInManager)
         {
 
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
 
         public IActionResult Register()
         {

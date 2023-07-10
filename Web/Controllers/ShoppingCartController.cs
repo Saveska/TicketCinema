@@ -3,7 +3,7 @@ using Stripe;
 using System.Security.Claims;
 using TicketCinema.Service.Interface;
 
-namespace TicketCinema.Controllers
+namespace TicketCinema.Web.Controllers
 {
     public class ShoppingCartController : Controller
     {
@@ -18,7 +18,7 @@ namespace TicketCinema.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return View(this._shoppingCartService.getShoppingCartInfo(userId));
+            return View(_shoppingCartService.getShoppingCartInfo(userId));
         }
 
         public IActionResult DeleteFromShoppingCart(Guid id)
@@ -26,7 +26,7 @@ namespace TicketCinema.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var result = this._shoppingCartService.deleteMovieFromShoppingCart(userId, id);
+            var result = _shoppingCartService.deleteMovieFromShoppingCart(userId, id);
 
             if (result)
             {
@@ -38,11 +38,11 @@ namespace TicketCinema.Controllers
             }
         }
 
-        public Boolean Order()
+        public bool Order()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var result = this._shoppingCartService.order(userId);
+            var result = _shoppingCartService.order(userId);
 
             return result;
         }
@@ -53,7 +53,7 @@ namespace TicketCinema.Controllers
             var chargeService = new ChargeService();
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var order = this._shoppingCartService.getShoppingCartInfo(userId);
+            var order = _shoppingCartService.getShoppingCartInfo(userId);
 
             var customer = customerService.Create(new CustomerCreateOptions
             {
@@ -63,7 +63,7 @@ namespace TicketCinema.Controllers
 
             var charge = chargeService.Create(new ChargeCreateOptions
             {
-                Amount = (Convert.ToInt32(order.TotalPrice) * 100),
+                Amount = Convert.ToInt32(order.TotalPrice) * 100,
                 Description = "TicketCinema Application Payment",
                 Currency = "usd",
                 Customer = customer.Id
@@ -71,7 +71,7 @@ namespace TicketCinema.Controllers
 
             if (charge.Status == "succeeded")
             {
-                var result = this.Order();
+                var result = Order();
 
                 if (result)
                 {

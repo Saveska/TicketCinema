@@ -6,7 +6,7 @@ using TicketCinema.Models.Identity;
 using TicketCinema.Models;
 using TicketCinema.Service.Interface;
 
-namespace TicketCinema.Controllers.Api
+namespace TicketCinema.Web.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,14 +24,14 @@ namespace TicketCinema.Controllers.Api
         [HttpGet("[action]")]
         public List<Order> GetOrders()
         {
-            var result = this._orderService.getAllOrders();
+            var result = _orderService.getAllOrders();
             return result;
         }
 
         [HttpPost("[action]")]
         public Order GetDetailsForOrder(BaseEntity model)
         {
-            var result = this._orderService.getOrderDetails(model);
+            var result = _orderService.getOrderDetails(model);
             return result;
         }
 

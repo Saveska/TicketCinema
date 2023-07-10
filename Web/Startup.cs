@@ -6,10 +6,9 @@ using TicketCinema.Repository;
 using TicketCinema.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 using TicketCinema.Models.Identity;
-using Microsoft.AspNetCore.Identity;
 
 
-namespace TicketCinema
+namespace TicketCinema.Web
 {
     public class Startup
     {
@@ -38,10 +37,7 @@ namespace TicketCinema
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
 
-            //services.AddScoped<EmailSettings>(es => emailSettings);
-            //services.AddScoped<IEmailService, EmailService>(email => new EmailService(emailSettings));
-            //services.AddScoped<IBackgroundEmailSender, BackgroundEmailSender>();
-            //services.AddHostedService<EmailScopedHostedService>();
+
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
@@ -55,10 +51,12 @@ namespace TicketCinema
                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
            );
             services.AddRazorPages();
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+
+
+        }
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
 

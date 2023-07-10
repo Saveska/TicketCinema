@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using TicketCinema.Models;
 
-namespace TicketCinema.Controllers
+namespace TicketCinema.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -15,7 +15,7 @@ namespace TicketCinema.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(/*"~/Web/Views/Home/Index.cshtml"*/);
         }
 
         public IActionResult Privacy()

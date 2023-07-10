@@ -5,7 +5,7 @@ using TicketCinema.Models.DomainModels;
 using TicketCinema.Models.DTO;
 using TicketCinema.Service.Interface;
 
-namespace TicketCinema.Controllers
+namespace TicketCinema.Web.Controllers
 {
     public class MoviesController : Controller
     {
@@ -22,7 +22,7 @@ namespace TicketCinema.Controllers
         public IActionResult Index()
         {
             _logger.LogInformation("User Request -> Get All Movies!");
-            return View(this._movieService.GetAllMovies());
+            return View(_movieService.GetAllMovies());
         }
 
         // GET: Movies/Details/5
@@ -34,7 +34,7 @@ namespace TicketCinema.Controllers
                 return NotFound();
             }
 
-            var movie = this._movieService.GetDetailsForMovie(id);
+            var movie = _movieService.GetDetailsForMovie(id);
             if (movie == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace TicketCinema.Controllers
             if (ModelState.IsValid)
             {
                 movie.Id = Guid.NewGuid();
-                this._movieService.CreateNewMovie(movie);
+                _movieService.CreateNewMovie(movie);
                 return RedirectToAction(nameof(Index));
             }
             return View(movie);
@@ -76,7 +76,7 @@ namespace TicketCinema.Controllers
                 return NotFound();
             }
 
-            var movie = this._movieService.GetDetailsForMovie(id);
+            var movie = _movieService.GetDetailsForMovie(id);
             if (movie == null)
             {
                 return NotFound();
@@ -102,7 +102,7 @@ namespace TicketCinema.Controllers
             {
                 try
                 {
-                    this._movieService.UpdeteExistingMovie(movie);
+                    _movieService.UpdeteExistingMovie(movie);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -130,7 +130,7 @@ namespace TicketCinema.Controllers
                 return NotFound();
             }
 
-            var movie = this._movieService.GetDetailsForMovie(id);
+            var movie = _movieService.GetDetailsForMovie(id);
             if (movie == null)
             {
                 return NotFound();
@@ -146,14 +146,14 @@ namespace TicketCinema.Controllers
         {
             _logger.LogInformation("User Request -> Delete Movie in DataBase!");
 
-            this._movieService.DeleteMovie(id);
+            _movieService.DeleteMovie(id);
             return RedirectToAction(nameof(Index));
         }
 
 
         public IActionResult AddMovieToCart(Guid id)
         {
-            var result = this._movieService.GetShoppingCartInfo(id);
+            var result = _movieService.GetShoppingCartInfo(id);
             return View(result);
         }
 
@@ -167,7 +167,7 @@ namespace TicketCinema.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var result = this._movieService.AddToShoppingCart(model, userId);
+            var result = _movieService.AddToShoppingCart(model, userId);
 
             if (result)
             {
@@ -177,7 +177,7 @@ namespace TicketCinema.Controllers
         }
         private bool MovieExists(Guid id)
         {
-            return this._movieService.GetDetailsForMovie(id) != null;
+            return _movieService.GetDetailsForMovie(id) != null;
         }
     }
 }
