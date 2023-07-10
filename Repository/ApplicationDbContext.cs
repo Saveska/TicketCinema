@@ -6,6 +6,7 @@ using TicketCinema.Models.Relations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Stripe;
 
 namespace TicketCinema.Repository
 {
@@ -15,10 +16,10 @@ namespace TicketCinema.Repository
             : base(options)
         {
         }
-       
+
         public virtual DbSet<Movie> Movies { get; set; }
-        public virtual DbSet<ShoppingCart> ShoppingCards { get; set; }
-        public virtual DbSet<MovieInShoppingCart> ProductInShoppingCarts { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual DbSet<MovieInShoppingCart> MovieInShoppingCarts { get; set; }
         public virtual DbSet<EmailMessage> EmailMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -67,6 +68,5 @@ namespace TicketCinema.Repository
                 .HasForeignKey(z => z.OrderId);
         }
 
- 
     }
 }

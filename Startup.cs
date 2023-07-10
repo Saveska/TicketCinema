@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using TicketCinema.Models.Identity;
 
 
-namespace TicketCinema.Web
+namespace TicketCinema
 {
     public class Startup
     {
@@ -56,8 +56,8 @@ namespace TicketCinema.Web
 
 
         }
-            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
 
